@@ -9,7 +9,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.name }}
-  condition: and(succeeded(), ${{ parameters.matrix }})
+  condition: and(${{ parameters.matrix }}, in(dependencies.PreBuildValidation.result, 'Succeeded', 'Skipped'))
   dependsOn:
   - PreBuildValidation
   - CopyBaseImages
@@ -91,4 +91,6 @@ jobs:
     displayName: Publish Image Info File Artifact
   - ${{ if eq(variables['System.TeamProject'], 'public') }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
+      parameters:
+        condition: ne(variables.testScriptPath, '')
   - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
