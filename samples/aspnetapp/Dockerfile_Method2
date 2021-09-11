@@ -1,0 +1,5 @@
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+WORKDIR App
+COPY aspnetapp/publish/. .
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]

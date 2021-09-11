@@ -1,1 +1,2 @@
 docker build -t aspnetapp .
+docker build -f ./Dockerfile_Method2 -t aspnetapp .
